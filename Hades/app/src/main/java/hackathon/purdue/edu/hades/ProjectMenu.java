@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hackathon.purdue.edu.hades.mainMenu.ContentFragment;
+import hackathon.purdue.edu.hades.mainMenu.createProjectFragment;
 import yalantis.com.sidemenu.interfaces.Resourceble;
 import yalantis.com.sidemenu.interfaces.ScreenShotable;
 import yalantis.com.sidemenu.model.SlideMenuItem;
@@ -63,16 +64,11 @@ public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewA
 
     //Methods specialized for new menu here
     private void createMenuList() {
-        SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.mipmap.ic_action_expand);
+        SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.mipmap.ic_action_exit);
         list.add(menuItem0);
-        //TODO: Automate this so that we find email accounts associated with user and add their icons and stuff
-        SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.GAMES, R.mipmap.ic_action_home);
+        SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.ADDEMAIL, R.mipmap.ic_action_plusone);
         list.add(menuItem);
-
-        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.FRIENDS, R.mipmap.ic_action_html5);
-        list.add(menuItem3);
-        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SETTINGS, R.mipmap.ic_action_android);
-        list.add(menuItem4);
+        //TODO: Automate adding new icons so that we find email accounts associated with user and add their icons and stuff
     }
 
 
@@ -170,13 +166,13 @@ public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewA
 
     private ScreenShotable replaceFragment(ScreenShotable screenShotable, String name) {
         //Switch depending on the name of the Menu //TODO: Implement fragment switching
-        /*switch (name) {
-            case ContentFragment.GAMES:
+        switch (name) {
+            case ContentFragment.ADDEMAIL:
                 Log.v(LOG_TAG, "Games Menu");
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, GamesFragment.newInstance()).setCustomAnimations(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom).addToBackStack("Games").commit();
-                getSupportActionBar().setTitle("Games");
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, createProjectFragment.newInstance()).setCustomAnimations(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom).addToBackStack("Games").commit();
+                getSupportActionBar().setTitle("New Project");
                 break;
-            case ContentFragment.GROUPS:
+            /*case ContentFragment.GROUPS:
 
                 Log.v(LOG_TAG, "Groups Menu");
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, GroupsFragment.newInstance()).setCustomAnimations(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom).commit();
@@ -193,8 +189,8 @@ public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewA
                 Log.v(LOG_TAG, "Settings Menu");
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, SettingsFragment.newInstance()).setCustomAnimations(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom).commit();
                 getSupportActionBar().setTitle("Settings");
-                break;
-        }*/
+                break;*/
+        }
         return contentFragment;
     }
 
