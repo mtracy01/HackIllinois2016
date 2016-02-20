@@ -58,8 +58,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mSharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
 
-        Toast.makeText(this, "Logged in? " + isLoggedIn(), Toast.LENGTH_LONG).show();
-
         callbackManager = CallbackManager.Factory.create();
         // If the access token is available already assign it.
         accessToken = AccessToken.getCurrentAccessToken();
@@ -75,6 +73,10 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor edit = mSharedPreferences.edit();
                 edit.putBoolean("loggedin",true);
                 edit.commit();
+
+                Intent intent = new Intent(getApplicationContext(),ProjectMenu.class);
+                startActivity(intent);
+                finish();
             }
 
             @Override

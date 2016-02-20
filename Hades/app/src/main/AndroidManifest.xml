@@ -34,7 +34,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProjectMenu"></activity>
+        <activity android:name=".ProjectMenu"
+                  android:theme="@style/MainMenuTheme">
+        </activity>
     </application>
 
 </manifest>
