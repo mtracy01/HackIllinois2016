@@ -22,7 +22,6 @@ public class DefaultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         mSharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
-        Toast.makeText(this,""+isLoggedIn(), Toast.LENGTH_LONG).show();
 
 
         if (isLoggedIn()) {
