@@ -25,9 +25,6 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
@@ -75,14 +72,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                // App code
-                /*test.setText(
-                        "User ID: "
-                                + loginResult.getAccessToken().getUserId()
-                                + "\n" +
-                                "Auth Token: "
-                                + loginResult.getAccessToken().getToken()
-                );*/
                 SharedPreferences.Editor edit = mSharedPreferences.edit();
                 edit.putBoolean("loggedin",true);
                 edit.commit();
