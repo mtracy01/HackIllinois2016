@@ -34,7 +34,7 @@ public class createProjectFragment extends Fragment {
         // Required empty public constructor
     }
 
-   
+
     // TODO: Rename and change types and number of parameters
     public static createProjectFragment newInstance() {
         createProjectFragment fragment = new createProjectFragment();

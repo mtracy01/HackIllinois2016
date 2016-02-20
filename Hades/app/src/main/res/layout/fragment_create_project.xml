@@ -1,13 +1,51 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hackathon.purdue.edu.hades.mainMenu.createProjectFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:stretchColumns="1,2"
+    >
+<TableRow>
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+    android:id="@+id/project_name_text"
+    android:textSize="30sp"
+    android:layout_width="wrap_content"
+    android:layout_height="50dp"
+    android:layout_marginLeft="20dp"
+    />
+    <EditText
+        android:id="@+id/project_name_edittext"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        />
+    <TextView
+        android:id="@+id/selectImage"
+        android:text="Select Image:"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        />
+    <ImageView
+        android:id="@+id/imageSelect"
+        android:background="@drawable/com_facebook_profile_picture_blank_portrait"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        />
+    <TextView
+        android:id="@+id/email_name"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        />
+    <EditText
+        android:id="@+id/email_name_edittext"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        />
+</TableRow>
+</TableLayout>
