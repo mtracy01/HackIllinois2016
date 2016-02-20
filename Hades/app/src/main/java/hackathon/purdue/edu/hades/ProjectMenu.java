@@ -20,7 +20,7 @@ import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
 
-public class ProjectMenu extends AppCompatActivity {
+public class ProjectMenu extends ActionBarActivity {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
