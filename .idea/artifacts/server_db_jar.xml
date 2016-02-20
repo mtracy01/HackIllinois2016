@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="server_db:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/server_db_jar</output-path>
+    <root id="archive" name="server_db.jar">
+      <element id="module-output" name="server_db" />
+    </root>
+  </artifact>
+</component>
