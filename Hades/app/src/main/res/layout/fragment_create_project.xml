@@ -4,48 +4,74 @@
     android:layout_height="match_parent"
     android:stretchColumns="1,2"
     >
-<TableRow>
+<TableRow android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
     <TextView
-    android:id="@+id/project_name_text"
-    android:textSize="30sp"
-    android:layout_width="wrap_content"
-    android:layout_height="50dp"
-    android:layout_marginLeft="20dp"
-    />
-    <EditText
-        android:id="@+id/project_name_edittext"
-        android:textSize="30sp"
+        android:id="@+id/project_name_text"
+        android:text="Project Name:"
+        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+    />
+    <EditText
+        android:id="@+id/project_name_edittext"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
         />
+</TableRow>
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/selectImage"
         android:text="Select Image:"
         android:layout_width="wrap_content"
+        android:textSize="20sp"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         />
+</TableRow>
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/imageSelect"
         android:background="@drawable/com_facebook_profile_picture_blank_portrait"
-        android:layout_width="100dp"
+        android:layout_width="30dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="20dp"
-        />
+        android:layout_marginLeft="10dp"
+        android:contentDescription="Project Icon" />
+</TableRow>
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/email_name"
-        android:textSize="30sp"
+        android:text="Email:"
+        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         />
     <EditText
         android:id="@+id/email_name_edittext"
-        android:textSize="30sp"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         />
 </TableRow>
+    <TableRow>
+        <Button
+            android:id="@+id/submit_button"
+            android:background="@drawable/com_facebook_button_background"
+            android:text="@string/submit"
+            android:layout_marginLeft="20dp"/>
+    </TableRow>
 </TableLayout>
