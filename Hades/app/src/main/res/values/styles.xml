@@ -30,4 +30,10 @@
         <item name="android:background">@color/primary</item>
     </style>
 
+    <!-- Theme for our new main menu -->
+    <style name="MainMenuTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBarOverlay">false</item>
+        <!--<item name="android:background">#FFFFFF</item>-->
+    </style>
+
 </resources>

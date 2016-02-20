@@ -26,7 +26,7 @@ public class DefaultActivity extends AppCompatActivity {
 
 
         if (isLoggedIn()) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, ProjectMenu.class);
             startActivity(intent);
             finish();
         } else {
