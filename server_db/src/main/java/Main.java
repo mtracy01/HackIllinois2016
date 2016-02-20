@@ -19,7 +19,7 @@ public class Main {
 
         DynamoDB dynamoDB = new DynamoDB(client);
 
-        String tableName = "Movies";
+        String tableName = "test2";
 
         try {
             System.out.println("Attempting to create table; please wait...");
