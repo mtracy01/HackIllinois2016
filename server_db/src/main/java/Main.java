@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         AmazonDynamoDBClient client = new AmazonDynamoDBClient()
-                .withEndpoint("http://localhost:8000");
+                .withEndpoint("dynamodb.us-west-2.amazonaws.com");
 
         DynamoDB dynamoDB = new DynamoDB(client);
 
