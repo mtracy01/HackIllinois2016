@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
+        <item name="windowActionBarOverlay">false</item>
     </style>
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
@@ -22,17 +22,20 @@
 
         <item name="colorButtonNormal">@color/primary_darker</item>
         <item name="android:colorButtonNormal">@color/primary_darker</item>
+        <item name="windowActionBarOverlay">false</item>
     </style>
 
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorPrimary">@color/iron</item>
         <item name="android:background">@color/primary</item>
+        <item name="windowActionBarOverlay">false</item>
     </style>
 
     <!-- Theme for our new main menu -->
     <style name="MainMenuTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBarOverlay">false</item>
+        <item name="android:windowActionBar">false</item>
         <!--<item name="android:background">#FFFFFF</item>-->
     </style>
 

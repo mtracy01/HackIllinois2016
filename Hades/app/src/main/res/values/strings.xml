@@ -4,4 +4,5 @@
     <string name="label_facebook_login">Please Login With Facebook</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
+    <string name="action_logout">Logout</string>
 </resources>

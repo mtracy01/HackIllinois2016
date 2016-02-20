@@ -2,6 +2,8 @@ package hackathon.purdue.edu.hades;
 
 
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -19,12 +21,13 @@ import java.util.List;
 
 import hackathon.purdue.edu.hades.mainMenu.ContentFragment;
 import yalantis.com.sidemenu.interfaces.Resourceble;
+import yalantis.com.sidemenu.interfaces.ScreenShotable;
 import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
 
-public class ProjectMenu extends ActionBarActivity {
-
+public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewAnimatorListener {
+    private String LOG_TAG = "ProjectMenu";
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
     List<SlideMenuItem> list = new ArrayList<>();
@@ -54,27 +57,48 @@ public class ProjectMenu extends ActionBarActivity {
         });
 
         setActionBar();
-        //TODO: And this: createMenuList();
+        createMenuList();
+        viewAnimator = new ViewAnimator<>(this, list, contentFragment, drawerLayout, this);
     }
+
+    //Methods specialized for new menu here
+    private void createMenuList() {
+        SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.mipmap.ic_action_expand);
+        list.add(menuItem0);
+        //TODO: Automate this so that we find email accounts associated with user and add their icons and stuff
+        SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.GAMES, R.mipmap.ic_action_home);
+        list.add(menuItem);
+
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.FRIENDS, R.mipmap.ic_action_html5);
+        list.add(menuItem3);
+        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.SETTINGS, R.mipmap.ic_action_android);
+        list.add(menuItem4);
+    }
+
+
     private void setActionBar() {
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationIcon(R.mipmap.ic_action_map);
+        toolbar.setNavigationIcon(R.mipmap.ic_action_expand);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerToggle.syncState();
+            }
+        });
         getSupportActionBar().setTitle("Games");
 
         toolbar.setOnMenuItemClickListener(new android.support.v7.widget.Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                //Log.v(LOG_TAG, "Menu Item is: " + menuItem.getItemId());
-                /*if (menuItem.getItemId() == R.id.action_logout) {
+                Log.v(LOG_TAG, "Menu Item is: " + menuItem.getItemId());
+                if (menuItem.getItemId() == R.id.action_logout) {
                     FacebookHelper.logout();
-                    startActivity(new Intent(MainMenu.this, LoginActivity.class));
-                    overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_out_top);*/
-                /*} else if (menuItem.getItemId() == R.id.invite_friends) {
-                    FacebookHelper.inviteFriends();
-                }*/
+                    startActivity(new Intent(ProjectMenu.this, LoginActivity.class));
+                    overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_out_top);
+                }
                 return true;
             }
         });
@@ -109,11 +133,80 @@ public class ProjectMenu extends ActionBarActivity {
     }
 
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_menu, menu);
         return true;
-    }*/
+    }
 
+    @Override
+    public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
+        Log.v(LOG_TAG, "" + position);
+        switch (slideMenuItem.getName()) {
+            case ContentFragment.CLOSE:
+                return screenShotable;
+            default:
+                Log.v(LOG_TAG, "Name = " + slideMenuItem.getName());
+                return replaceFragment(screenShotable, slideMenuItem.getName());
+        }
+    }
+
+    @Override
+    public void disableHomeButton() {
+            getSupportActionBar().setHomeButtonEnabled(false);
+    }
+
+    @Override
+    public void enableHomeButton() {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            drawerLayout.closeDrawers();
+    }
+
+    @Override
+    public void addViewToContainer(View view) {
+            linearLayout.addView(view);
+    }
+
+    private ScreenShotable replaceFragment(ScreenShotable screenShotable, String name) {
+        //Switch depending on the name of the Menu //TODO: Implement fragment switching
+        /*switch (name) {
+            case ContentFragment.GAMES:
+                Log.v(LOG_TAG, "Games Menu");
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, GamesFragment.newInstance()).setCustomAnimations(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom).addToBackStack("Games").commit();
+                getSupportActionBar().setTitle("Games");
+                break;
+            case ContentFragment.GROUPS:
+
+                Log.v(LOG_TAG, "Groups Menu");
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, GroupsFragment.newInstance()).setCustomAnimations(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom).commit();
+                getSupportActionBar().setTitle("Groups");
+                break;
+            case ContentFragment.FRIENDS:
+
+                Log.v(LOG_TAG, "Friends Menu");
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, FriendStatus.newInstance()).setCustomAnimations(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom).commit();
+                getSupportActionBar().setTitle("Friends");
+                break;
+            case ContentFragment.SETTINGS:
+
+                Log.v(LOG_TAG, "Settings Menu");
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, SettingsFragment.newInstance()).setCustomAnimations(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom).commit();
+                getSupportActionBar().setTitle("Settings");
+                break;
+        }*/
+        return contentFragment;
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
 }
