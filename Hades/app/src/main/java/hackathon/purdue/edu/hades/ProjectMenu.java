@@ -5,6 +5,7 @@ package hackathon.purdue.edu.hades;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +19,11 @@ import android.widget.LinearLayout;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.regions.Regions;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +36,7 @@ import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
 
-public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewAnimatorListener {
+public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewAnimatorListener, createProjectFragment.OnFragmentInteractionListener {
     private String LOG_TAG = "ProjectMenu";
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -42,17 +48,22 @@ public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_menu);
-        //TODO: Get proper identity
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                getApplicationContext(),
-                "COGNITO_IDENTITY_POOL",
-                Regions.DEFAULT_REGION
-        );
+        GraphRequest.GraphJSONObjectCallback userData = new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                try{
+                    Data.userid = object.getString("id");
+                } catch(Exception e){
+
+                }
+            }
+        };
         contentFragment = ContentFragment.newInstance(R.drawable.menu_item_selector); //TODO: Fix this
         //TODO: Set initial fragment here
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, new InboxFragment())
                 .commit();
+
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -212,5 +223,10 @@ public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewA
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

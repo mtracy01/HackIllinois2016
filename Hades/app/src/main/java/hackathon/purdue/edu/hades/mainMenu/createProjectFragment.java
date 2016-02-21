@@ -15,6 +15,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexRangeKey;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+
+import com.amazonaws.services.dynamodbv2.model.*;
+
+import com.facebook.FacebookActivity;
+
 import hackathon.purdue.edu.hades.Adapters.ArrayAdapterWithIcon;
 import hackathon.purdue.edu.hades.R;
 
@@ -81,6 +95,33 @@ public class createProjectFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO: Check that all parameters are valid, if they are, tell the server to create the email, else give error message to user
+                String pName = projectName.getText().toString();
+                String pEmail = projectEmail.getText().toString();
+                int image = 0;
+                 Drawable android = getActivity().getDrawable(R.mipmap.ic_action_android);
+                Drawable html5 = getActivity().getDrawable(R.mipmap.ic_action_html5);
+                Drawable facebook = getActivity().getDrawable(R.mipmap.ic_action_facebook);
+                Drawable rocket = getActivity().getDrawable(R.mipmap.ic_action_rocket);
+                Drawable book = getActivity().getDrawable(R.mipmap.ic_action_book);
+                Drawable sImage = projectIconView.getBackground();
+                if(sImage==android)
+                    image=1;
+                else if(sImage==html5)
+                    image=2;
+                else if(sImage==facebook)
+                    image=3;
+                else if(sImage==rocket)
+                    image=4;
+                else if(sImage==book)
+                    image=5;
+                CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                        getActivity().getApplicationContext(),
+                        "us-east-1:8258ab02-1aea-49f2-b6cf-a6159cc2c8d0",
+                        Regions.DEFAULT_REGION
+                );
+                AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient(credentialsProvider);
+
+
             }
         });
 
