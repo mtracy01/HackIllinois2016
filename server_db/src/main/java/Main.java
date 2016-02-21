@@ -8,6 +8,8 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.*;
 
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
@@ -15,24 +17,33 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         AmazonDynamoDBClient client = new AmazonDynamoDBClient()
-                .withEndpoint("dynamodb.us-west-2.amazonaws.com");
+                .withEndpoint("http://localhost:8000");//dynamodb.us-west-2.amazonaws.com
 
         DynamoDB dynamoDB = new DynamoDB(client);
 
-        String tableName = "test2";
+        String tableName = "UserID_And_Email";
 
         try {
+            HelperFunctions.DeleteTable(dynamoDB.getTable(tableName));
             System.out.println("Attempting to create table; please wait...");
-            Table table = dynamoDB.createTable(tableName,
-                    Arrays.asList(
-                            new KeySchemaElement("year", KeyType.HASH),  //Partition key
-                            new KeySchemaElement("title", KeyType.RANGE)), //Sort key
-                    Arrays.asList(
-                            new AttributeDefinition("year", ScalarAttributeType.N),
-                            new AttributeDefinition("title", ScalarAttributeType.S)),
-                    new ProvisionedThroughput(10L, 10L));
+            ArrayList<AttributeDefinition> attributeDefinitions= new ArrayList<AttributeDefinition>();
+            attributeDefinitions.add(new AttributeDefinition().withAttributeName("emailAddr").withAttributeType("S"));
+
+            ArrayList<KeySchemaElement> keySchema = new ArrayList<KeySchemaElement>();
+            keySchema.add(new KeySchemaElement().withAttributeName("emailAddr").withKeyType(KeyType.HASH));
+
+            CreateTableRequest request = new CreateTableRequest()
+                    .withTableName(tableName)
+                    .withKeySchema(keySchema)
+                    .withAttributeDefinitions(attributeDefinitions)
+                    .withProvisionedThroughput(new ProvisionedThroughput()
+                            .withReadCapacityUnits(10L)
+                            .withWriteCapacityUnits(10L));
+
+            Table table = dynamoDB.createTable(request);
             table.waitForActive();
             System.out.println("Success.  Table status: " + table.getDescription().getTableStatus());
+            if(HelperFunctions.createNewUser("apple","ji",1,table)) System.out.println("Hayoo!");
 
         } catch (Exception e) {
             System.err.println("Unable to create table: ");
@@ -40,4 +51,5 @@ public class Main {
         }
 
     }
+
 }
