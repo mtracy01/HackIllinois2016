@@ -16,6 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.regions.Regions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +42,12 @@ public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_menu);
-
+        //TODO: Get proper identity
+        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                getApplicationContext(),
+                "COGNITO_IDENTITY_POOL",
+                Regions.DEFAULT_REGION
+        );
         contentFragment = ContentFragment.newInstance(R.drawable.menu_item_selector); //TODO: Fix this
         //TODO: Set initial fragment here
         getSupportFragmentManager().beginTransaction()
