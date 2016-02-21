@@ -110,25 +110,26 @@ public class createProjectFragment extends Fragment {
                 CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                         getActivity().getApplicationContext(),
                         "us-east-1:8258ab02-1aea-49f2-b6cf-a6159cc2c8d0",
-                        Regions.DEFAULT_REGION
+                        Regions.US_EAST_1
                 );
                 AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient(credentialsProvider);
                 final DynamoDBMapper mapper = new DynamoDBMapper(dbClient);
                 final userInfo info = new userInfo();
                 info.setEmail(pEmail);
                 info.setUserId(Data.userid);
-                final emailInfo eInfo = new emailInfo();
+                info.setPicture(image + "");
+                /*final emailInfo eInfo = new emailInfo();
                 eInfo.setEmail(pEmail);
                 eInfo.setPicture(image + "");
                 final projectInfo pInfo = new projectInfo();
                 pInfo.setEmail(pEmail);
-                pInfo.setProject(pName);
+                pInfo.setProject(pName);*/
                 AsyncTask t = new AsyncTask() {
                     @Override
                     protected Object doInBackground(Object[] params) {
                         mapper.save(info);
-                        mapper.save(pInfo);
-                        mapper.save(eInfo);
+                        //mapper.save(pInfo);
+                        //mapper.save(eInfo);
                         return null;
                     }
                 };

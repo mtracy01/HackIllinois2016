@@ -12,8 +12,9 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 public class userInfo {
     private String userID = "testDD";
     private String email = "testDD";
+    private String picture = "";
 
-    @DynamoDBHashKey(attributeName = "userId")
+    @DynamoDBAttribute(attributeName = "userId")
     public String getUserID() {
         return userID;
     }
@@ -22,12 +23,21 @@ public class userInfo {
         this.userID = userID;
     }
 
-    @DynamoDBAttribute(attributeName = "emailAddr")
+    @DynamoDBHashKey(attributeName = "emailAddr")
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @DynamoDBAttribute(attributeName = "picture")
+    public String getPicture(){
+        return picture;
+    }
+
+    public void setPicture(String picture){
+        this.picture=picture;
     }
 }
