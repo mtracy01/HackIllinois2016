@@ -1,6 +1,3 @@
-// Copyright 2012-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// Licensed under the Apache License, Version 2.0.
-
 
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
@@ -8,9 +5,7 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.*;
 
-import java.io.Console;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Main {
 
