@@ -12,13 +12,13 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 
 
-public class GetObject {
-    private static String bucketName = "emailholder";
-    private static String key;//Name of the object;
+public class GetEmailAddress {
 
-    public static void main(String[] args) throws IOException {
-        AmazonS3 s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
-        String senderEmail;  // SenderEmail is the email we extract from the object
+
+    /*public static void main(String[] args) throws IOException {
+        AmazonS3 s3Client = new AmazonS3Client(new ProfileCredentialsProvider());*/
+    public static String extractSenderEmail(AmazonS3 s3Client, String bucketName, String key) throws IOException{
+        String senderEmail = "";  // SenderEmail is the email we extract from the object
         try {
             System.out.println("Downloading an object");
             S3Object s3object = s3Client.getObject(new GetObjectRequest(
@@ -37,7 +37,7 @@ public class GetObject {
             System.out.println("Printing bytes retrieved.");
             String total = displayTextInputStream(objectPortion.getObjectContent());
             senderEmail = extractEmailAddress(total);
-            System.out.println(senderEmail);
+
         } catch (AmazonServiceException ase) {
             System.out.println("Caught an AmazonServiceException, which" +
                     " means your request made it " +
@@ -56,6 +56,7 @@ public class GetObject {
                     "such as not being able to access the network.");
             System.out.println("Error Message: " + ace.getMessage());
         }
+        return senderEmail;
     }
 
     private static String displayTextInputStream(InputStream input)
@@ -74,9 +75,12 @@ public class GetObject {
         return total;
     }
     public static String extractEmailAddress(String s){
+        String email = null;
         String substr = s.substring(0,s.indexOf(';'));
-        int start = s.lastIndexOf("for");
-        String email = s.substring(start+3, s.indexOf(';'));
+        if(substr != null ) {
+            int start = substr.lastIndexOf("for");
+            email = s.substring(start + 3, s.indexOf(';'));
+        }
         return email;
     }
 
