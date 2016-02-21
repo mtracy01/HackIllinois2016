@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,20 +17,12 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexRangeKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-
-import com.amazonaws.services.dynamodbv2.model.*;
-
-import com.facebook.FacebookActivity;
 
 import hackathon.purdue.edu.hades.Adapters.ArrayAdapterWithIcon;
+import hackathon.purdue.edu.hades.Data;
 import hackathon.purdue.edu.hades.R;
 
 /**
@@ -70,17 +63,17 @@ public class createProjectFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_create_project, container, false);
-        projectName = (EditText)v.findViewById(R.id.project_name_edittext);
-        projectEmail = (EditText)v.findViewById(R.id.email_name_edittext);
+        projectName = (EditText) v.findViewById(R.id.project_name_edittext);
+        projectEmail = (EditText) v.findViewById(R.id.email_name_edittext);
         projectIconView = (ImageView) v.findViewById(R.id.imageSelect);
         projectIconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String[] names = new String[] {"Android","HTML5","Facebook","Rocket","Book"};
-                final Integer[] icons = new Integer[] {R.mipmap.ic_action_android,
-                R.mipmap.ic_action_html5,R.mipmap.ic_action_facebook,R.mipmap.ic_action_rocket,
-                R.mipmap.ic_action_book};
-                final ListAdapter adapter = new ArrayAdapterWithIcon(getContext(),names,icons);
+                final String[] names = new String[]{"Android", "HTML5", "Facebook", "Rocket", "Book"};
+                final Integer[] icons = new Integer[]{R.mipmap.ic_action_android,
+                        R.mipmap.ic_action_html5, R.mipmap.ic_action_facebook, R.mipmap.ic_action_rocket,
+                        R.mipmap.ic_action_book};
+                final ListAdapter adapter = new ArrayAdapterWithIcon(getContext(), names, icons);
                 new AlertDialog.Builder(getActivity()).setTitle("Select an Image")
                         .setAdapter(adapter, new DialogInterface.OnClickListener() {
                             @Override
@@ -90,7 +83,7 @@ public class createProjectFragment extends Fragment {
                         }).show();
             }
         });
-        Button b = (Button)v.findViewById(R.id.submit_button);
+        Button b = (Button) v.findViewById(R.id.submit_button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,28 +91,49 @@ public class createProjectFragment extends Fragment {
                 String pName = projectName.getText().toString();
                 String pEmail = projectEmail.getText().toString();
                 int image = 0;
-                 Drawable android = getActivity().getDrawable(R.mipmap.ic_action_android);
+                Drawable android = getActivity().getDrawable(R.mipmap.ic_action_android);
                 Drawable html5 = getActivity().getDrawable(R.mipmap.ic_action_html5);
                 Drawable facebook = getActivity().getDrawable(R.mipmap.ic_action_facebook);
                 Drawable rocket = getActivity().getDrawable(R.mipmap.ic_action_rocket);
                 Drawable book = getActivity().getDrawable(R.mipmap.ic_action_book);
                 Drawable sImage = projectIconView.getBackground();
-                if(sImage==android)
-                    image=1;
-                else if(sImage==html5)
-                    image=2;
-                else if(sImage==facebook)
-                    image=3;
-                else if(sImage==rocket)
-                    image=4;
-                else if(sImage==book)
-                    image=5;
+                if (sImage == android)
+                    image = 1;
+                else if (sImage == html5)
+                    image = 2;
+                else if (sImage == facebook)
+                    image = 3;
+                else if (sImage == rocket)
+                    image = 4;
+                else if (sImage == book)
+                    image = 5;
                 CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                         getActivity().getApplicationContext(),
                         "us-east-1:8258ab02-1aea-49f2-b6cf-a6159cc2c8d0",
                         Regions.DEFAULT_REGION
                 );
                 AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient(credentialsProvider);
+                final DynamoDBMapper mapper = new DynamoDBMapper(dbClient);
+                final userInfo info = new userInfo();
+                info.setEmail(pEmail);
+                info.setUserId(Data.userid);
+                final emailInfo eInfo = new emailInfo();
+                eInfo.setEmail(pEmail);
+                eInfo.setPicture(image + "");
+                final projectInfo pInfo = new projectInfo();
+                pInfo.setEmail(pEmail);
+                pInfo.setProject(pName);
+                AsyncTask t = new AsyncTask() {
+                    @Override
+                    protected Object doInBackground(Object[] params) {
+                        mapper.save(info);
+                        mapper.save(pInfo);
+                        mapper.save(eInfo);
+                        return null;
+                    }
+                };
+                t.execute();
+
 
 
             }
@@ -127,7 +141,6 @@ public class createProjectFragment extends Fragment {
 
         return v;
     }
-
 
 
     public void onButtonPressed(Uri uri) {

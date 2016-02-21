@@ -3,7 +3,6 @@ package hackathon.purdue.edu.hades.mainMenu;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 /**
@@ -14,7 +13,7 @@ public class emailInfo {
     private String email;
     private String picture;
 
-    @DynamoDBIndexHashKey(attributeName = "emailAddr")
+    @DynamoDBHashKey(attributeName = "emailAddr")
     public String getEmail() {
         return email;
     }

@@ -1,18 +1,10 @@
 package hackathon.purdue.edu.hades;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -21,7 +13,6 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -71,10 +62,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
 
                 SharedPreferences.Editor edit = mSharedPreferences.edit();
-                edit.putBoolean("loggedin",true);
+                edit.putBoolean("loggedin", true);
                 edit.commit();
 
-                Intent intent = new Intent(getApplicationContext(),ProjectMenu.class);
+                Intent intent = new Intent(getApplicationContext(), ProjectMenu.class);
                 startActivity(intent);
                 finish();
             }

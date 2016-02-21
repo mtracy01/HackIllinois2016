@@ -28,6 +28,7 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout linearLayout;
         TextView emailTitle;
+
         public ViewHolder(View view) {
             super(view);
             linearLayout = (LinearLayout) view.findViewById(R.id.linear_layout);
@@ -49,7 +50,7 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.ViewHolder> 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Launch email fragment",Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Launch email fragment", Toast.LENGTH_LONG).show();
             }
         });
     }

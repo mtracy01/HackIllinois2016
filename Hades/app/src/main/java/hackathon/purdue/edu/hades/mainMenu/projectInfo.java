@@ -1,6 +1,7 @@
 package hackathon.purdue.edu.hades.mainMenu;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
@@ -8,11 +9,11 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
  * Created by Matthew on 2/20/2016.
  */
 @DynamoDBTable(tableName = "Email_And_Picture")
-public class iconInfo {
+public class projectInfo {
     private String email;
     private String project;
 
-    @DynamoDBIndexHashKey(attributeName = "emailAddr")
+    @DynamoDBHashKey(attributeName = "emailAddr")
     public String getEmail() {
         return email;
     }

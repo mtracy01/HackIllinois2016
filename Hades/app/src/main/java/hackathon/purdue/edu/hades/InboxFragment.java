@@ -26,6 +26,7 @@ public class InboxFragment extends Fragment {
     private List<String> mEmails;
 
     private FloatingActionButton mAddFAB;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class InboxFragment extends Fragment {
         mEmailView = (RecyclerView) view.findViewById(R.id.email_view);
         mLayoutManager = new LinearLayoutManager(getContext());
         fillEmails();
-        mEmailAdapter = new EmailAdapter(getContext(),mEmails);
+        mEmailAdapter = new EmailAdapter(getContext(), mEmails);
 
         mAddFAB = (FloatingActionButton) view.findViewById(R.id.btn_add);
         setupButton();
@@ -53,7 +54,7 @@ public class InboxFragment extends Fragment {
         mAddFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"Launch another fragment",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Launch another fragment", Toast.LENGTH_LONG).show();
             }
         });
     }

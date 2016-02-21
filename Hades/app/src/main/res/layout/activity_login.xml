@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <TextView android:id="@+id/label_facebook_login"
+    <TextView
+        android:id="@+id/label_facebook_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="@string/label_facebook_login"/>
+        android:text="@string/label_facebook_login" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/btn_login"

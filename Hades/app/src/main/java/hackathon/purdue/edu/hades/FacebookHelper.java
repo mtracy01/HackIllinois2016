@@ -1,7 +1,5 @@
 package hackathon.purdue.edu.hades;
 
-import android.widget.Toast;
-
 import com.facebook.login.LoginManager;
 
 /**

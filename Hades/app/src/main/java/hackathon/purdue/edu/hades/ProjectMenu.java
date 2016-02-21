@@ -1,7 +1,6 @@
 package hackathon.purdue.edu.hades;
 
 
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -10,16 +9,13 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.regions.Regions;
-import com.facebook.FacebookSdk;
+import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 
@@ -44,6 +40,7 @@ public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewA
     ViewAnimator viewAnimator;
     LinearLayout linearLayout;
     ContentFragment contentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,19 +48,21 @@ public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewA
         GraphRequest.GraphJSONObjectCallback userData = new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
-                try{
+                try {
                     Data.userid = object.getString("id");
-                } catch(Exception e){
+                } catch (Exception e) {
 
                 }
             }
         };
+        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), userData);
+        graphRequest.executeAsync();
+
         contentFragment = ContentFragment.newInstance(R.drawable.menu_item_selector); //TODO: Fix this
         //TODO: Set initial fragment here
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, new InboxFragment())
                 .commit();
-
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -169,18 +168,18 @@ public class ProjectMenu extends ActionBarActivity implements ViewAnimator.ViewA
 
     @Override
     public void disableHomeButton() {
-            getSupportActionBar().setHomeButtonEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(false);
     }
 
     @Override
     public void enableHomeButton() {
-            getSupportActionBar().setHomeButtonEnabled(true);
-            drawerLayout.closeDrawers();
+        getSupportActionBar().setHomeButtonEnabled(true);
+        drawerLayout.closeDrawers();
     }
 
     @Override
     public void addViewToContainer(View view) {
-            linearLayout.addView(view);
+        linearLayout.addView(view);
     }
 
     private ScreenShotable replaceFragment(ScreenShotable screenShotable, String name) {
