@@ -1,13 +1,21 @@
 package hackathon.purdue.edu.hades.mainMenu;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
 
+import hackathon.purdue.edu.hades.Adapters.ArrayAdapterWithIcon;
 import hackathon.purdue.edu.hades.R;
 
 /**
@@ -19,14 +27,11 @@ import hackathon.purdue.edu.hades.R;
  * create an instance of this fragment.
  */
 public class createProjectFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private EditText projectName;
+    private ImageView projectIconView;
+    private EditText projectEmail;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -35,33 +40,55 @@ public class createProjectFragment extends Fragment {
     }
 
 
-    // TODO: Rename and change types and number of parameters
     public static createProjectFragment newInstance() {
         createProjectFragment fragment = new createProjectFragment();
-        /*Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);*?
-        fragment.setArguments(args);*/
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_project, container, false);
+        View v = inflater.inflate(R.layout.fragment_create_project, container, false);
+        projectName = (EditText)v.findViewById(R.id.project_name_edittext);
+        projectEmail = (EditText)v.findViewById(R.id.email_name_edittext);
+        projectIconView = (ImageView) v.findViewById(R.id.imageSelect);
+        projectIconView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String[] names = new String[] {"Android","HTML5","Facebook","Rocket","Book"};
+                final Integer[] icons = new Integer[] {R.mipmap.ic_action_android,
+                R.mipmap.ic_action_html5,R.mipmap.ic_action_facebook,R.mipmap.ic_action_rocket,
+                R.mipmap.ic_action_book};
+                final ListAdapter adapter = new ArrayAdapterWithIcon(getContext(),names,icons);
+                new AlertDialog.Builder(getActivity()).setTitle("Select an Image")
+                        .setAdapter(adapter, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                projectIconView.setBackground(getActivity().getDrawable(icons[which]));
+                            }
+                        }).show();
+            }
+        });
+        Button b = (Button)v.findViewById(R.id.submit_button);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Check that all parameters are valid, if they are, tell the server to create the email, else give error message to user
+            }
+        });
+
+        return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -96,7 +123,6 @@ public class createProjectFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

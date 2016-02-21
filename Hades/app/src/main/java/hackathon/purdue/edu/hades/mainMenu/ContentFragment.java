@@ -15,16 +15,11 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 
 /**
- * Created by Konstantin on 22.12.2014.
+ * Created by Matthew D. Tracy on 2/20/2016
  */
 public class ContentFragment extends Fragment implements ScreenShotable {
     public static final String CLOSE = "Close";
     public static final String ADDEMAIL = "Add Email";
-    public static final String GAMES = "Games";
-    public static final String GROUPS = "Groups;";
-
-    public static final String FRIENDS = "Friends";
-    public static final String SETTINGS = "Settings";
 
     private View containerView;
     protected ImageView mImageView;
