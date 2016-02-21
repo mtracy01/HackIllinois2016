@@ -29,14 +29,13 @@ public class HelperFunctions {
     }
 
     /*Create a new user with the given user id*/
-    public static boolean createNewUser(String emailaddr,String userid, int iconid, Table table){
+    public static boolean createNewUser(String emailaddr,String userid, int iconid, Table table,AmazonDynamoDBClient client){
         if(true ) {  //check if the user id exists in the db
-
-            // existItem(dynamoDB, userid);
             Item item = new Item()
                     .withPrimaryKey("emailAddr", emailaddr)
                     .withString("userid", userid)
                     .withNumber("iconid", iconid);
+
 
             // Write the item to the table
             PutItemOutcome outcome = table.putItem(item);
@@ -46,15 +45,19 @@ public class HelperFunctions {
 
 
     /*Check if the item exists in a certain table*/
-    private static boolean existItem(Table table, String newUserid) {
-        GetItemSpec spec = new GetItemSpec()
-                .withPrimaryKey("userid", newUserid);
+    private static boolean existItem(Table table, String newUserid,AmazonDynamoDBClient client) {
+        ScanRequest scanRequest = new ScanRequest()
+                .withTableName("Reply");
 
-        Item item = table.getItem(spec);
-        if(item == null ){
+        ScanResult result = client.scan(scanRequest);
+        for (Map<String, AttributeValue> item : result.getItems()) {
+            // System.out.println(item.toJSON());
+        }
+       /* if(item == null ){
             System.out.println("uo");
             return false;
         }
-        else return true;
+        else return true;*/
+        return true;
     }
 }
