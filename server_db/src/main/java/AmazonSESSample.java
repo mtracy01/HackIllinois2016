@@ -8,7 +8,7 @@ import java.io.IOException;
 public class AmazonSESSample {
 
     static final String FROM = "ec2-user@brandonstewart.net";  // Replace with your "From" address. This address must be verified.
-    static final String TO = "matthetracy@gmail.com"; // Replace with a "To" address. If your account is still in the
+    static final String TO = "brandon@brandonstewart.net"; // Replace with a "To" address. If your account is still in the
     // sandbox, this address must be verified.
     static final String BODY = "This email was sent through Amazon SES by using the AWS SDK for Java.";
     static final String SUBJECT = "Amazon SES test (AWS SDK for Java)";

@@ -40,7 +40,7 @@ public class CreateTablesLoadData {
             // Parameter3: writes per second // Parameter4/5: partition key and data type
             // Parameter6/7: sort key and data type (if applicable)
 
-            createTable("Email_And_Picture", 5L, 5L, "emailAddr", "S", "picture", "S");
+            createTable("Email_And_Project", 5L, 5L, "emailAddr", "S", "project", "S");
 
 
 
